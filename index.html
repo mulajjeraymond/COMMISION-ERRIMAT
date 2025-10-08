@@ -153,33 +153,36 @@
 function calculateCommission(department, sales, target) {
   const percent = (sales / target) * 100;
   let commission = 0;
+  let commissionRate = 0;
 
   switch (department) {
     case 'Sales and Marketing Manager':
-      if (percent >= 51 && percent <= 70) commission = sales * (0.1/100);
-      else if (percent >= 80 && percent <= 100) commission = sales * (0.25/100);
+      if (percent >= 51 && percent <= 70) commissionRate = 0.1;
+      else if (percent >= 80 && percent <= 100) commissionRate = 0.25;
       break;
     case 'Depots':
-      if (percent >= 50 && percent < 51) commission = sales * (0.1/100);
-      else if (percent >= 51 && percent <= 79) commission = sales * (0.5/100);
-      else if (percent >= 80 && percent <= 100) commission = sales * (1/100);
+      if (percent >= 50 && percent < 51) commissionRate = 0.1;
+      else if (percent >= 51 && percent <= 79) commissionRate = 0.5;
+      else if (percent >= 80 && percent <= 100) commissionRate = 1;
       break;
     case 'Drivers':
-      if (percent < 50) commission = sales * (0.1/100);
-      else if (percent >= 51 && percent <= 79) commission = sales * (0.25/100);
-      else if (percent >= 80 && percent <= 100) commission = sales * (0.5/100);
+      if (percent < 50) commissionRate = 0.1;
+      else if (percent >= 51 && percent <= 79) commissionRate = 0.25;
+      else if (percent >= 80 && percent <= 100) commissionRate = 0.5;
       break;
     case 'Marketers':
-      if (percent >= 51 && percent <= 79) commission = sales * (0.1/100);
-      else if (percent >= 80 && percent <= 100) commission = sales * (0.25/100);
+      if (percent >= 51 && percent <= 79) commissionRate = 0.1;
+      else if (percent >= 80 && percent <= 100) commissionRate = 0.25;
       break;
     case 'Route Salers':
-      if (percent <= 50) commission = sales * (0.5/100);
-      else if (percent >= 51 && percent <= 79) commission = sales * (0.8/100);
-      else if (percent >= 80 && percent <= 100) commission = sales * (1.2/100);
+      if (percent <= 50) commissionRate = 0.5;
+      else if (percent >= 51 && percent <= 79) commissionRate = 0.8;
+      else if (percent >= 80 && percent <= 100) commissionRate = 1.2;
       break;
   }
-  return { commission, percent };
+
+  commission = sales * (commissionRate / 100);
+  return { commission, percent, commissionRate };
 }
 
 function addSourceRow() {
@@ -219,7 +222,7 @@ function generateReceipt() {
     return;
   }
 
-  const { commission, percent } = calculateCommission(dept, sales, target);
+  const { commission, percent, commissionRate } = calculateCommission(dept, sales, target);
   const vat = commission * 0.10;
   const netCommission = commission - vat;
   const date = new Date().toLocaleDateString();
@@ -227,8 +230,9 @@ function generateReceipt() {
   let sourcesHTML = "";
   document.querySelectorAll('#salesSourcesTable tbody tr').forEach(row => {
     const source = row.querySelector('.source').value || "N/A";
-    const amount = row.querySelector('.salesInput').value || 0;
-    sourcesHTML += `<tr><td>${source}</td><td>${parseFloat(amount).toLocaleString()}</td></tr>`;
+    const amount = parseFloat(row.querySelector('.salesInput').value) || 0;
+    const share = ((amount / sales) * 100).toFixed(2);
+    sourcesHTML += `<tr><td>${source}</td><td>${amount.toLocaleString()}</td><td>${share}%</td></tr>`;
   });
 
   const receiptHTML = `
@@ -240,13 +244,14 @@ function generateReceipt() {
 
     <h3>Sales Breakdown</h3>
     <table border="1" style="width:100%; border-collapse:collapse;">
-      <tr><th>Source</th><th>Sales (UGX)</th></tr>
+      <tr><th>Source</th><th>Sales (UGX)</th><th>% of Total</th></tr>
       ${sourcesHTML}
-      <tr><th>Total Sales</th><th>${sales.toLocaleString()}</th></tr>
+      <tr><th>Total Sales</th><th>${sales.toLocaleString()}</th><th>100%</th></tr>
     </table>
 
     <p><strong>Target:</strong> UGX ${target.toLocaleString()}</p>
     <p><strong>Target Achieved:</strong> ${percent.toFixed(2)}%</p>
+    <p><strong>Commission Rate Applied:</strong> ${commissionRate.toFixed(2)}%</p>
     <hr>
     <p><strong>Gross Commission:</strong> UGX ${commission.toLocaleString()}</p>
     <p><strong>Less 10% VAT:</strong> UGX ${vat.toLocaleString()}</p>
