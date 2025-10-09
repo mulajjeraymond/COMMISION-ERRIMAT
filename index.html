@@ -180,7 +180,7 @@ function calculateCommission(department, sales, target) {
       else if (percent >= 80 && percent <= 100) commissionRate = 1 / 100;
       break;
     case 'Drivers':
-       if (percent >= 50 && percent < 51) commissionRate = 0.1 / 100;
+      if (percent < 50) commissionRate = 0.1 / 100;
       else if (percent >= 51 && percent <= 79) commissionRate = 0.25 / 100;
       else if (percent >= 80 && percent <= 100) commissionRate = 0.5 / 100;
       break;
@@ -245,37 +245,52 @@ function generateReceipt() {
     const amount = row.querySelector('.salesInput').value || 0;
     sourcesHTML += `<tr><td>${source}</td><td>${parseFloat(amount).toLocaleString()}</td></tr>`;
   });
-    const receiptHTML =  `
-    <h2 style="text-align:center; font-weight:bold;">ERRIMAT INDUSTRIES LTD</h2> 
-    <p><strong>Date:</strong> ${date}</p> 
-    <p><strong>Name:</strong> ${name}</p>
-     <p><strong>Department:</strong> ${dept}</p>
-     <p><strong>Month:</strong> ${month}</p>
+  const receiptHTML = `
+  <div style="display: flex; align-items: center; margin-bottom: 10px;">
+    <div style="flex: 0 0 auto;">
+      <img src="images/ERRIMAT_LOGO.jpeg" alt="ERRIMAT INDUSTRIES LTD LOGO" style="width: 70px; height: auto; margin-right: 15px;">
+    </div>
+    <div style="flex: 1; text-align: left;">
+      <h2 style="margin: 0; color: #003366;">ERRIMAT INDUSTRIES LTD</h2>
+      <p style="margin: 2px 0;">0023 MPIGI ROAD, ERRIMAT BUILDING, KASANJE — BUSIRO SOUTH, WAKISO</p>
+      <p style="margin: 2px 0;">HEAD OFFICE: MUTEBI ROAD, KATWE — KAMPALA</p>
+      <p style="margin: 2px 0;">TEL: 0771820222 / 0702575976</p>
+      <p style="margin: 2px 0;">Email: <a href="mailto:errimat.industries@gmail.com">errimat.industries@gmail.com</a> | TIN: 1017879421</p>
+    </div>
+  </div>
+  <hr style="border: 1px solid #003366; margin-bottom: 10px;">
+  <h3 style="text-align: center; color: #003366;">COMMISSION RECEIPT</h3>
 
-    <h3>Sales Breakdown</h3>
-    <table border="1" style="width:100%; border-collapse:collapse;">
-      <tr><th>Source</th><th>Sales (UGX)</th></tr>
-      ${sourcesHTML}
-      <tr><th>Total Sales</th><th>${sales.toLocaleString()}</th></tr>
-    </table>
+  <p><strong>Date:</strong> ${date}</p>
+  <p><strong>Name:</strong> ${name}</p>
+  <p><strong>Department:</strong> ${dept}</p>
+  <p><strong>Month:</strong> ${month}</p>
 
-    <p><strong>Target:</strong> UGX ${target.toLocaleString()}</p>
-    <p><strong>Target Achieved:</strong> ${percent.toFixed(2)}%</p>
-    <p><strong>Commission Rate Used:</strong> ${parseFloat(commissionRate.toString())}%</p>
-    ${note ? `<p style="color:red;"><em>${note}</em></p>` : ""}
-    <hr>
-    <p><strong>Gross Commission:</strong> UGX ${commission.toLocaleString()}</p>
-    <p><strong>Less 10% VAT:</strong> UGX ${vat.toLocaleString()}</p>
-    <p><strong>Net Commission Payable:</strong> UGX ${netCommission.toLocaleString()}</p>
-    <hr>
+  <h3>Sales Breakdown</h3>
+  <table border="1" style="width:100%; border-collapse:collapse;">
+    <tr><th>Source</th><th>Sales (UGX)</th></tr>
+    ${sourcesHTML}
+    <tr><th>Total Sales</th><th>${sales.toLocaleString()}</th></tr>
+  </table>
 
-    <h3 style="margin-top:30px;">Signatures</h3>
-    <table style="width:100%; margin-top:10px;">
-      <tr><td>Prepared by: ___________________</td><td>Confirmed by: ___________________</td></tr>
-      <tr><td>Verified by: ___________________</td><td>Approved by: ___________________</td></tr>
-      <tr><td colspan="2">Received by: ___________________</td></tr>
-    </table>
-  `;
+  <p><strong>Target:</strong> UGX ${target.toLocaleString()}</p>
+  <p><strong>Target Achieved:</strong> ${percent.toFixed(2)}%</p>
+  <p><strong>Commission Rate Used:</strong> ${parseFloat(commissionRate.toString())}%</p>
+  ${note ? `<p style="color:red;"><em>${note}</em></p>` : ""}
+  <hr>
+  <p><strong>Gross Commission:</strong> UGX ${commission.toLocaleString()}</p>
+  <p><strong>Less 10% VAT:</strong> UGX ${vat.toLocaleString()}</p>
+  <p><strong>Net Commission Payable:</strong> UGX ${netCommission.toLocaleString()}</p>
+  <hr>
+
+  <h3 style="margin-top:30px;">Signatures</h3>
+  <table style="width:100%; margin-top:10px;">
+    <tr><td>Prepared by: ___________________</td><td>Confirmed by: ___________________</td></tr>
+    <tr><td>Verified by: ___________________</td><td>Approved by: ___________________</td></tr>
+    <tr><td colspan="2">Received by: ___________________</td></tr>
+  </table>
+`;
+
 
   document.getElementById('receipt').innerHTML = receiptHTML;
   document.getElementById('receipt').style.display = 'block';
@@ -313,8 +328,3 @@ function refreshForm() {
 
 </body>
 </html>      
-
-
-
-
-
