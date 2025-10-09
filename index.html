@@ -180,7 +180,7 @@ function calculateCommission(department, sales, target) {
       else if (percent >= 80 && percent <= 100) commissionRate = 1 / 100;
       break;
     case 'Drivers':
-      if (percent < 50) commissionRate = 0.1 / 100;
+       if (percent >= 50 && percent < 51) commissionRate = 0.1 / 100;
       else if (percent >= 51 && percent <= 79) commissionRate = 0.25 / 100;
       else if (percent >= 80 && percent <= 100) commissionRate = 0.5 / 100;
       break;
@@ -313,6 +313,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
