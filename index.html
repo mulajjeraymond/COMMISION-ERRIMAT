@@ -245,8 +245,11 @@ function generateReceipt() {
     const amount = row.querySelector('.salesInput').value || 0;
     sourcesHTML += `<tr><td>${source}</td><td>${parseFloat(amount).toLocaleString()}</td></tr>`;
   });
-    const receiptHTML =  `
-    <h2 style="text-align:center; font-weight:bold;">ERRIMAT INDUSTRIES LTD</h2> 
+    const receiptHTML = 
+      <div style="display:flex; align-items:center; margin-bottom:10px;">
+    <img src="logo.png" alt="Errimat Industries Ltd" style="width:80px; height:auto; margin-right:15px;">
+    <h2 style="font-weight:bold; margin:0;">ERRIMAT INDUSTRIES LTD</h2>
+  </div>
     <p><strong>Date:</strong> ${date}</p> 
     <p><strong>Name:</strong> ${name}</p>
      <p><strong>Department:</strong> ${dept}</p>
@@ -313,6 +316,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
