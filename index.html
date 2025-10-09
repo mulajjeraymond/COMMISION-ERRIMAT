@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> commision - Errimat Industries Ltd</title>
+  <title>Commission Calculator - Errimat Industries Ltd</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -245,11 +245,11 @@ function generateReceipt() {
     const amount = row.querySelector('.salesInput').value || 0;
     sourcesHTML += `<tr><td>${source}</td><td>${parseFloat(amount).toLocaleString()}</td></tr>`;
   });
-    const receiptHTML = `
-    <div style="display:flex; align-items:center; margin-bottom:10px;">
-    <img src="https://github.com/mulajjeraymond/COMMISION-ERRIMAT/blob/main/WhatsApp%20Image%202025-10-09%20at%209.18.33%20AM(1).jpeg" alt="Errimat Industries Ltd" style="width:80px; height:auto; margin-right:15px;">
-    <h2 style="font-weight:bold; margin:0;">ERRIMAT INDUSTRIES LTD</h2>
+    const receiptHTML =  `
+    <div style="text-align:center;">
+    <img src="logo.png"  style="width:150px; height:auto; margin-bottom:10px;">
   </div>
+    <h2 style="text-align:center; font-weight:bold;">ERRIMAT INDUSTRIES LTD</h2> 
     <p><strong>Date:</strong> ${date}</p> 
     <p><strong>Name:</strong> ${name}</p>
      <p><strong>Department:</strong> ${dept}</p>
@@ -316,13 +316,3 @@ function refreshForm() {
 
 </body>
 </html>      
-
-
-
-
-
-
-
-
-
-
