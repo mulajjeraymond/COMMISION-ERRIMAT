@@ -135,6 +135,13 @@
       </tr>
     </tfoot>
   </table>
+      <div id="debtFailContainer" style="display:none; margin-top:10px;">
+        <label><strong>Did the marketer fail to collect debts?</strong></label><br>
+        <label><input type="radio" name="debtFail" value="Yes"> Yes</label>
+        <label style="margin-left:15px;"><input type="radio" name="debtFail" value="No" checked> No</label>
+    </div>
+
+    <br>
 
   <button class="add-btn" onclick="addSourceRow()">+ Add Source</button>
 
@@ -160,7 +167,7 @@ function calculateCommission(department, sales, target) {
   if (percent > 100) {
     // Sales exceeded target → use 100% commission rate
     switch (department) {
-  
+      case 'Sales and Marketing Manager': commissionRate = 0.25 / 100; break;
       case 'Depots': commissionRate = 1 / 100; break;
       case 'Drivers': commissionRate = 0.25 / 100; break;
       case 'Marketers': commissionRate = 1 / 100; break;
@@ -172,6 +179,11 @@ function calculateCommission(department, sales, target) {
 
   // Normal condition (≤100%)
   switch (department) {
+    case 'Sales and Marketing Manager':
+      if (percent < 50) commissionRate = 0 / 100;
+      else if (percent >= 50 && percent <= 99) commissionRate = 0.1/ 100;
+      else if (percent >= 99 && percent <= 100) commissionRate = 0.25 / 100;
+      break;
     case 'Depots':
       if (percent >= 50 && percent < 51) commissionRate = 0.1 / 100;
       else if (percent >= 51 && percent <= 79) commissionRate = 0.5 / 100;
@@ -186,6 +198,14 @@ function calculateCommission(department, sales, target) {
       if (percent >= 51 && percent <= 99) commissionRate = 0.75 / 100;
       else if (percent >= 99 && percent <= 100) commissionRate = 1 / 100;
       break;
+      let debtFail = document.querySelector("input[name='debtFail']:checked").value;
+
+        if (debtFail === "Yes" && commissionRate > 0) {
+            commissionRate -= 0.005; // 0.5% deduction
+            deductionApplied = true;
+            if (commissionRate < 0) commissionRate = 0;
+      break;
+          
     case 'Route Salers':
       if (percent < 50) commissionRate = 0 / 100;
       else if (percent >= 50 && percent <= 99) commissionRate = 0.75 / 100;
@@ -199,6 +219,16 @@ function calculateCommission(department, sales, target) {
   }
   return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: '' };
 }
+  document.getElementById('department').addEventListener('change', function () {
+    const dept = this.value;
+    const debtField = document.getElementById('debtFailContainer');
+
+    if (dept === "Marketers") {
+        debtField.style.display = "block";
+    } else {
+        debtField.style.display = "none";
+    }
+});
 
 function addSourceRow() {
   const tbody = document.querySelector('#salesSourcesTable tbody');
@@ -331,6 +361,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
