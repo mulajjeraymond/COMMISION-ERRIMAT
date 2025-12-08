@@ -103,6 +103,7 @@
     <option>Drivers</option>
     <option>Marketers</option>
     <option>Route Salers</option>
+    <option>Marketers Export</option>
   </select>
 
   <label>Month:</label>
@@ -128,7 +129,7 @@
     <tbody></tbody>
     <tfoot>
       <tr>
-        <th>Total Sales</th>
+         <th>Total Sales</th>
         <th id="totalSales">0</th>
         <th></th>
       </tr>
@@ -164,6 +165,7 @@ function calculateCommission(department, sales, target) {
       case 'Drivers': commissionRate = 0.25 / 100; break;
       case 'Marketers': commissionRate = 1 / 100; break;
       case 'Route Salers': commissionRate = 1.2 / 100; break;
+      case 'Marketers Export': commissionRate = 0.6 / 100; break;
     }
     return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: 'Target exceeded - commission capped at 100% rate' };
   }
@@ -188,6 +190,11 @@ function calculateCommission(department, sales, target) {
       if (percent < 50) commissionRate = 0 / 100;
       else if (percent >= 50 && percent <= 99) commissionRate = 0.75 / 100;
       else if (percent >= 99 && percent <= 100) commissionRate = 1.2 / 100;
+      break;
+      case 'Marketers Export':
+      if (percent < 50) commissionRate = 0 / 100;
+      else if (percent >= 50 && percent <= 99) commissionRate = 0.4/ 100;
+      else if (percent >= 99 && percent <= 100) commissionRate = 0.6 / 100;
       break;
   }
   return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: '' };
@@ -324,5 +331,6 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
