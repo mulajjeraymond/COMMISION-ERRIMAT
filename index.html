@@ -188,17 +188,11 @@ function calculateCommission(department, sales, target) {
       else if (percent >= 99 && percent <= 100) commissionRate = 0.25 / 100;
       break;
     case 'Marketers':
-      if (percent >= 51 && percent <= 99) commissionRate = 0.75 / 100;
+      if (percent < 50) commissionRate = 0 / 100;
+      else if (percent >= 51 && percent <= 99) commissionRate = 0.75 / 100;
       else if (percent >= 99 && percent <= 100) commissionRate = 1 / 100;
       break;
-      let debtFail = document.querySelector("input[name='debtFail']:checked").value;
-
-        if (debtFail === "Yes" && commissionRate > 0) {
-            commissionRate -= 0.005; // 0.5% deduction
-            deductionApplied = true;
-            if (commissionRate < 0) commissionRate = 0;
-      break;
-          
+      
     case 'Route Salers':
       if (percent < 50) commissionRate = 0 / 100;
       else if (percent >= 50 && percent <= 99) commissionRate = 0.75 / 100;
@@ -343,6 +337,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
