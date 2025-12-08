@@ -135,11 +135,7 @@
       </tr>
     </tfoot>
   </table>
-      <div id="debtFailContainer" style="display:none; margin-top:10px;">
-        <label><strong>Did the marketer fail to collect debts?</strong></label><br>
-        <label><input type="radio" name="debtFail" value="Yes"> Yes</label>
-        <label style="margin-left:15px;"><input type="radio" name="debtFail" value="No" checked> No</label>
-    </div>
+
 
     <br>
 
@@ -219,17 +215,6 @@ function calculateCommission(department, sales, target) {
   }
   return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: '' };
 }
-  document.getElementById('department').addEventListener('change', function () {
-    const dept = this.value;
-    const debtField = document.getElementById('debtFailContainer');
-
-    if (dept === "Marketers") {
-        debtField.style.display = "block";
-    } else {
-        debtField.style.display = "none";
-    }
-});
-
 function addSourceRow() {
   const tbody = document.querySelector('#salesSourcesTable tbody');
   const row = document.createElement('tr');
@@ -361,6 +346,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
