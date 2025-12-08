@@ -159,10 +159,10 @@ function calculateCommission(department, sales, target) {
   if (percent > 100) {
     // Sales exceeded target → use 100% commission rate
     switch (department) {
-      case 'Sales and Marketing Manager': commissionRate = 0.25 / 100; break;
+  
       case 'Depots': commissionRate = 1 / 100; break;
-      case 'Drivers': commissionRate = 0.5 / 100; break;
-      case 'Marketers': commissionRate = 0.25 / 100; break;
+      case 'Drivers': commissionRate = 0.25 / 100; break;
+      case 'Marketers': commissionRate = 1 / 100; break;
       case 'Route Salers': commissionRate = 1.2 / 100; break;
     }
     return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: 'Target exceeded - commission capped at 100% rate' };
@@ -170,28 +170,24 @@ function calculateCommission(department, sales, target) {
 
   // Normal condition (≤100%)
   switch (department) {
-    case 'Sales and Marketing Manager':
-      if (percent >= 51 && percent <= 70) commissionRate = 0.1 / 100;
-      else if (percent >= 80 && percent <= 100) commissionRate = 0.25 / 100;
-      break;
     case 'Depots':
       if (percent >= 50 && percent < 51) commissionRate = 0.1 / 100;
       else if (percent >= 51 && percent <= 79) commissionRate = 0.5 / 100;
       else if (percent >= 80 && percent <= 100) commissionRate = 1 / 100;
       break;
     case 'Drivers':
-      if (percent < 50) commissionRate = 0.1 / 100;
-      else if (percent >= 51 && percent <= 79) commissionRate = 0.25 / 100;
-      else if (percent >= 80 && percent <= 100) commissionRate = 0.5 / 100;
+      if (percent < 50) commissionRate = 0 / 100;
+      else if (percent >= 51 && percent <= 99) commissionRate = 0.15 / 100;
+      else if (percent >= 99 && percent <= 100) commissionRate = 0.25 / 100;
       break;
     case 'Marketers':
-      if (percent >= 51 && percent <= 79) commissionRate = 0.1 / 100;
-      else if (percent >= 80 && percent <= 100) commissionRate = 0.25 / 100;
+      if (percent >= 51 && percent <= 99) commissionRate = 0.75 / 100;
+      else if (percent >= 99 && percent <= 100) commissionRate = 1 / 100;
       break;
     case 'Route Salers':
-      if (percent <= 50) commissionRate = 0.5 / 100;
-      else if (percent >= 51 && percent <= 79) commissionRate = 0.8 / 100;
-      else if (percent >= 80 && percent <= 100) commissionRate = 1.2 / 100;
+      if (percent < 50) commissionRate = 0 / 100;
+      else if (percent >= 50 && percent <= 99) commissionRate = 0.75 / 100;
+      else if (percent >= 99 && percent <= 100) commissionRate = 1.2 / 100;
       break;
   }
   return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: '' };
@@ -328,4 +324,5 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
