@@ -204,12 +204,9 @@ function calculateCommission(department, sales, target) {
       else if (percent >= 100 && percent <= 100) commissionRate = 0.6 / 100;
       break;
   }
-  return 
+  return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: '' }
 
-  let actualPercent = (sales / target) * 100;
-  // Only round to the nearest 10 if they hit 100% or more. 
-  // Otherwise, use the exact percentage.
-  let percent = (actualPercent >= 100) ? Math.round(actualPercent / 10) * 10 : actualPercent;
+
 }
 function addSourceRow() {
   const tbody = document.querySelector('#salesSourcesTable tbody');
@@ -342,6 +339,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
