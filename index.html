@@ -288,7 +288,7 @@ function generateReceipt() {
   ${note ? `<p style="color:red;"><em>${note}</em></p>` : ""}
   <hr>
   <p><strong>Gross Commission:</strong> UGX ${commission.toLocaleString()}</p>
-  <p><strong>Less 10% VAT:</strong> UGX ${vat.toLocaleString()}</p>
+  <p><strong>Less 10% WHT:</strong> UGX ${vat.toLocaleString()}</p>
   <p><strong>Net Commission Payable:</strong> UGX ${netCommission.toLocaleString()}</p>
   <hr>
 
@@ -337,6 +337,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
