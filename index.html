@@ -152,7 +152,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>
 function calculateCommission(department, sales, target) {
-  let percent = Math.round((sales / target) * 10) * 10;
+ let actualPercent = (sales / target) * 100;
+  // Only round to the nearest 10 if they hit 100% or more. 
+  // Otherwise, use the exact percentage.
+  let percent = (actualPercent >= 100) ? Math.round(actualPercent / 10) * 10 : actualPercent;
 
 
   let commissionRate = 0;
@@ -339,6 +342,7 @@ function refreshForm() {
 
 </body>
 </html>      
+
 
 
 
