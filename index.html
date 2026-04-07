@@ -192,19 +192,19 @@ function calculateCommission(department, sales, target) {
       break;
     case 'Marketers':
       if (percent < 50) commissionRate = 0 / 100;
-      else if (percent >= 51 && percent <= 99) commissionRate = 0.75 / 100;
-      else if (percent >= 100 && percent <= 100) commissionRate = 1 / 100;
+      else if (percent >= 51 && percent <= 95) commissionRate = 0.75 / 100;
+      else if (percent >= 96 && percent <= 100) commissionRate = 1 / 100;
       break;
       
     case 'Route Salers':
       if (percent < 50) commissionRate = 0 / 100;
-      else if (percent >= 50 && percent <= 99) commissionRate = 0.75 / 100;
-      else if (percent >= 100 && percent <= 100) commissionRate = 1.20 / 100;
+      else if (percent >= 50 && percent <= 95) commissionRate = 0.75 / 100;
+      else if (percent >= 96 && percent <= 100) commissionRate = 1.20 / 100;
       break;
       case 'Marketers Export':
       if (percent < 50) commissionRate = 0 / 100;
-      else if (percent >= 50 && percent <= 99) commissionRate = 0.4/ 100;
-      else if (percent >= 100 && percent <= 100) commissionRate = 0.6 / 100;
+      else if (percent >= 50 && percent <= 95) commissionRate = 0.40/ 100;
+      else if (percent >= 96 && percent <= 100) commissionRate = 0.60 / 100;
       break;
   }
   return { commission: sales * commissionRate, percent, commissionRate: commissionRate * 100, note: '' }
